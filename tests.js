@@ -1,5 +1,4 @@
 function isJsonLine(line) {
-  console.log('line:', line)
   return /\{*\}/.test(line);
 }
 
@@ -10,9 +9,7 @@ function grabJsonMessages(stdout) {
 
 gt.async('testing index.js', 1, function () {
   gt.exec('node', ['./index.js'], 0, function inspectOutput(stdout, stderr) {
-    console.log(stdout);
     var jsonMessages = grabJsonMessages(stdout);
-    console.log('json messages\n');
     console.log(jsonMessages);
   });
 }, 10000);

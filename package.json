@@ -4,7 +4,7 @@
   "description": "Example showing end to end testing with structured json logging",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node node_modules/gt tests.js"
   },
   "keywords": [
     "testing",
@@ -15,5 +15,8 @@
   "license": "ISC",
   "dependencies": {
     "bunyan": "~0.23.1"
+  },
+  "devDependencies": {
+    "gt": "~0.8.38"
   }
 }
