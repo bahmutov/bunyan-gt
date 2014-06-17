@@ -1,13 +1,17 @@
 var bunyan = require('bunyan');
-var log = bunyan.createLogger({name: "myapp"});
+var log = bunyan.createLogger({ name: 'myapp' });
+log.level(process.argv.some(function (str) {
+  return str === '--debug';
+}) ? 'debug' : 'info');
+
 console.log('hi from console');
 
-log.info('message', {
+log.debug('message', {
   foo: 'foo',
   bar: 'bar'
 });
 
-log.info('message 2', {
+log.debug('message 2', {
   foo: 'foo',
   bar: 'bar'
 });

@@ -33,8 +33,12 @@ gt.async('testing index.js', 2, function () {
     gt.equal(jsonMessages.length, 2, 'number of messages');
 
     var messages = jsonMessages.map(bunyanToMessage);
-    console.log(messages);
-    // find specific messages
-
+    // [ { message: { foo: 'foo', bar: 'bar' } },
+    //   { 'message 2': { foo: 'foo', bar: 'bar' } } ]
+    // check specific message
+    gt.equiv(messages[0].message, {
+      foo: 'foo',
+      bar: 'bar'
+    }, 'checked first message');
   });
 }, 10000);
