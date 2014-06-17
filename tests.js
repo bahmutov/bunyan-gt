@@ -28,14 +28,15 @@ function fromApp(name, info) {
 var fromMyApp = fromApp.bind(null, 'myapp');
 
 gt.async('testing index.js', 2, function () {
-  gt.exec('node', ['./index.js'], 0, function inspectOutput(stdout, stderr) {
+  gt.exec('node', ['./index.js', '--debug'], 0, function inspectOutput(stdout, stderr) {
     var jsonMessages = grabJsonMessages(stdout).filter(fromMyApp);
     gt.equal(jsonMessages.length, 2, 'number of messages');
 
     var messages = jsonMessages.map(bunyanToMessage);
     // [ { message: { foo: 'foo', bar: 'bar' } },
     //   { 'message 2': { foo: 'foo', bar: 'bar' } } ]
-    // check specific message
+
+    // check a specific message
     gt.equiv(messages[0].message, {
       foo: 'foo',
       bar: 'bar'
