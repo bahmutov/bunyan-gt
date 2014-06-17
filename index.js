@@ -7,7 +7,7 @@ log.info('message', {
   bar: 'bar'
 });
 
-log.info('message', {
+log.info('message 2', {
   foo: 'foo',
   bar: 'bar'
 });
