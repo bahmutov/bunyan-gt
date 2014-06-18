@@ -1,40 +1,11 @@
-function isJsonLine(line) {
-  return /\{*\}/.test(line);
-}
+var path = require('path');
+var bgt = require('..');
 
-function grabJsonMessages(stdout) {
-  var lines = stdout.split('\n').filter(isJsonLine);
-  return lines.map(JSON.parse);
-}
-
-function toMessage(msg) {
-  var k = msg.indexOf('{');
-  var label = msg.substr(0, k - 1);
-  var str = msg.substr(k);
-  /* jshint -W061 */
-  var obj = eval('(' + str + ')');
-  var result = {};
-  result[label] = obj;
-  return result;
-}
-
-function bunyanToMessage(info) {
-  return toMessage(info.msg);
-}
-
-function fromApp(name, info) {
-  return info.name === name;
-}
-
-var fromMyApp = fromApp.bind(null, 'myapp');
-
-gt.async('testing index.js', 3, function () {
-  gt.exec('node', ['./example.js', '--debug'], 0, function inspectOutput(stdout, stderr) {
+gt.async('grabbing message by logger name', function () {
+  var filename = path.join(__dirname, 'example.js');
+  gt.exec('node', [filename, '--debug'], 0, function inspectOutput(stdout, stderr) {
     gt.equal(stderr, '', 'no stderr');
-    var jsonMessages = grabJsonMessages(stdout).filter(fromMyApp);
-    gt.equal(jsonMessages.length, 2, 'number of messages');
-
-    var messages = jsonMessages.map(bunyanToMessage);
+    var messages = bgt(stdout, 'example');
     // [ { message: { foo: 'foo', bar: 'bar' } },
     //   { 'message 2': { foo: 'foo', bar: 'bar' } } ]
 
@@ -43,5 +14,37 @@ gt.async('testing index.js', 3, function () {
       foo: 'foo',
       bar: 'bar'
     }, 'checked first message');
+  });
+}, 10000);
+
+gt.async('grabbing message by label', function () {
+  var filename = path.join(__dirname, 'example.js');
+  gt.exec('node', [filename, '--debug'], 0, function inspectOutput(stdout, stderr) {
+    gt.equal(stderr, '', 'no stderr');
+    var messages = bgt(bgt(stdout, 'example'), 'message 2');
+    gt.equal(messages.length, 1, 'single message 2');
+    gt.equiv(messages[0].message, {
+      foo: 'foo',
+      bar: 'bar'
+    }, 'checked message contents');
+  });
+}, 10000);
+
+gt.test('invalid inputs', function () {
+  gt.raises(function () {
+    bgt([]);
+  }, Error, 'invalid inputs to function');
+});
+
+gt.async('grab shortcut', function () {
+  var filename = path.join(__dirname, 'example.js');
+  gt.exec('node', [filename, '--debug'], 0, function inspectOutput(stdout, stderr) {
+    gt.equal(stderr, '', 'no stderr');
+    var messages = bgt(stdout, 'example', 'message 2');
+    gt.equal(messages.length, 1, 'single message 2');
+    gt.equiv(messages[0].message, {
+      foo: 'foo',
+      bar: 'bar'
+    }, 'checked message contents');
   });
 }, 10000);

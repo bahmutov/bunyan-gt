@@ -26,8 +26,10 @@ gt.async('testing index.js', 2, function () {
   // execute index.js inside a unit test and capture bunyan output
   gt.exec('node', ['./index.js', '--debug'], 0,
     function inspectOutput(stdout, stderr) {
-      // bunyan output helper
-      var messages = bgt(stdout, 'message');
+      // bunyan output helpers
+      var allMessages = bgt(stdout, 'example');
+      var messages = bgt(allMessages, 'message');
+      // shortcut: bgt(stdout, 'example', 'message')
       gt.equal(messages[0].foo, 'foo');
     });
 });

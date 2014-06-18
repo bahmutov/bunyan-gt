@@ -1,5 +1,5 @@
 var bunyan = require('bunyan');
-var log = bunyan.createLogger({ name: 'myapp' });
+var log = bunyan.createLogger({ name: 'example' });
 log.level(process.argv.some(function (str) {
   return str === '--debug';
 }) ? 'debug' : 'info');
