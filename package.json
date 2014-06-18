@@ -35,7 +35,7 @@
     "url": "git@github.com:bahmutov/bunyan-gt.git"
   },
   "scripts": {
-    "test": "node node_modules/gt tests.js"
+    "test": "node node_modules/gt example/tests.js"
   }
 }
 
