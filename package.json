@@ -20,6 +20,7 @@
     "gt": "0.8.38",
     "jshint-summary": "0.4.0",
     "matchdep": "0.3.0",
+    "pre-git": "0.0.16",
     "time-grunt": "0.3.2"
   },
   "engines": {
@@ -33,6 +34,10 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "pre-commit": [
+    "grunt",
+    "npm test"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:bahmutov/bunyan-gt.git"
