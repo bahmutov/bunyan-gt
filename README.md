@@ -41,9 +41,15 @@ Other logging frameworks or console messages are ignored.
 
 It is simple to unit test a small piece of code. It is much harder
 to confirm that a complicated end to end test confirms the expected behavior.
-A human programmer would confirm that given inputs the program writes
-the expected log messages. *bunyan* logging module outputs log messages that
-are simple to parse. Thus it is simple to use them inside the unit tests.
+It is simple to execute a CLI tool with given inputs and check the exit code,
+as shown in this [post](http://bahmutov.calepin.co/homebrew-cli-testing.html).
+
+On the other hand, a human programmer would check the program's execution by looking
+at the logs. Human output is hard to parse, so automating this process as part of the
+unit tests would be hard if we were logging pure text messages. The solution
+is to output labeled JSON objects, for example using *bunyan* logging module.
+They are simple to enable (for example using different logging levels) when needed,
+simple to parse and easy to query from the unit tests to assert the correct execution.
 
 ## Bunyan example
 
