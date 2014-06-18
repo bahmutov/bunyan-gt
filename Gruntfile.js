@@ -19,7 +19,7 @@ module.exports = function (grunt) {
         reporter: require('jshint-summary')
       },
       default: {
-        'src': [ '*.js', 'test/*.js' ]
+        'src': [ '*.js', 'example/*.js' ]
       }
     },
 
@@ -28,7 +28,7 @@ module.exports = function (grunt) {
         atBegin: true
       },
       all: {
-        files: ['*.js'],
+        files: ['*.js', 'example/*.js'],
         tasks: ['jshint', 'test']
       }
     }

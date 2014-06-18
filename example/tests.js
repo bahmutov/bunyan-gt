@@ -29,7 +29,7 @@ function fromApp(name, info) {
 var fromMyApp = fromApp.bind(null, 'myapp');
 
 gt.async('testing index.js', 3, function () {
-  gt.exec('node', ['./index.js', '--debug'], 0, function inspectOutput(stdout, stderr) {
+  gt.exec('node', ['./example.js', '--debug'], 0, function inspectOutput(stdout, stderr) {
     gt.equal(stderr, '', 'no stderr');
     var jsonMessages = grabJsonMessages(stdout).filter(fromMyApp);
     gt.equal(jsonMessages.length, 2, 'number of messages');
