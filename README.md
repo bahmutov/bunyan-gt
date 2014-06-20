@@ -30,7 +30,7 @@ gt.async('testing index.js', 2, function () {
       var allMessages = bgt(stdout, 'example');
       var messages = bgt(allMessages, 'message');
       // shortcut: bgt(stdout, 'example', 'message')
-      gt.equal(messages[0].foo, 'foo');
+      gt.equal(messages[0], 'foo');
     });
 });
 ```
