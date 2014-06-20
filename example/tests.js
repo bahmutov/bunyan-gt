@@ -6,11 +6,11 @@ gt.async('grabbing message by logger name', function () {
   gt.exec('node', [filename, '--debug'], 0, function inspectOutput(stdout, stderr) {
     gt.equal(stderr, '', 'no stderr');
     var messages = bgt(stdout, 'example');
-    // [ { message: { foo: 'foo', bar: 'bar' } },
-    //   { 'message 2': { foo: 'foo', bar: 'bar' } } ]
+    // [ { foo: 'foo', bar: 'bar' },
+    //   { foo: 'foo', bar: 'bar' } ]
 
     // check a specific message
-    gt.equiv(messages[0].message, {
+    gt.equiv(messages[0], {
       foo: 'foo',
       bar: 'bar'
     }, 'checked first message');
@@ -23,7 +23,7 @@ gt.async('grabbing message by label', function () {
     gt.equal(stderr, '', 'no stderr');
     var messages = bgt(bgt(stdout, 'example'), 'message 2');
     gt.equal(messages.length, 1, 'single message 2');
-    gt.equiv(messages[0].message, {
+    gt.equiv(messages[0], {
       foo: 'foo',
       bar: 'bar'
     }, 'checked message contents');
@@ -42,7 +42,7 @@ gt.async('grab shortcut', function () {
     gt.equal(stderr, '', 'no stderr');
     var messages = bgt(stdout, 'example', 'message 2');
     gt.equal(messages.length, 1, 'single message 2');
-    gt.equiv(messages[0].message, {
+    gt.equiv(messages[0], {
       foo: 'foo',
       bar: 'bar'
     }, 'checked message contents');

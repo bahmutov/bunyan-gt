@@ -39,6 +39,8 @@ function textToMessages(input, name) {
 function labeledMessages(input, label) {
   return input.filter(function (msg) {
     return msg[label];
+  }).map(function (msg) {
+    return msg[label];
   });
 }
 
